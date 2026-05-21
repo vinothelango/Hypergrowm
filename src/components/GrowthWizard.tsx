@@ -62,22 +62,45 @@ export default function GrowthWizard({ onClose }: { onClose?: () => void }) {
       return;
     }
     setIsSubmitting(true);
-    
-    // Simulate API lead generation save
+
+    // Build a well-formatted inquiry email to Pixelgrowm
+    const selectedGoal  = GOALS.find(g => g.id === formData.goal)?.title   || formData.goal   || 'Not specified';
+    const selectedBudgetLabel = BUDGETS.find(b => b.id === formData.budget)?.label || formData.budget || 'Not specified';
+
+    const subject = encodeURIComponent(
+      `New Inquiry from ${formData.companyName} — ${selectedGoal}`
+    );
+
+    const body = encodeURIComponent(
+      `Hello Pixelgrowm Team,\n\n` +
+      `You have received a new inquiry via the Growth Wizard on your website.\n\n` +
+      `─────────────────────────────\n` +
+      `CONTACT DETAILS\n` +
+      `─────────────────────────────\n` +
+      `Name         : ${formData.name}\n` +
+      `Company      : ${formData.companyName}\n` +
+      `Email        : ${formData.email}\n` +
+      `Phone        : ${formData.phone || 'Not provided'}\n\n` +
+      `─────────────────────────────\n` +
+      `PROJECT REQUIREMENTS\n` +
+      `─────────────────────────────\n` +
+      `Primary Goal : ${selectedGoal}\n` +
+      `Budget Range : ${selectedBudgetLabel}\n` +
+      `Notes        : ${formData.notes || 'None'}\n\n` +
+      `─────────────────────────────\n` +
+      `Submitted on : ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST\n\n` +
+      `Please reply to the client at: ${formData.email}\n\n` +
+      `Regards,\nPixelgrowm Growth Wizard`
+    );
+
+    const mailtoLink = `mailto:${AGENCY_CONTACT.email}?subject=${subject}&body=${body}`;
+
+    // Open the mail client then mark as completed
     setTimeout(() => {
-      // Save to localStorage of lead histories
-      const existingLeads = JSON.parse(localStorage.getItem('pixelgrowm_leads') || '[]');
-      existingLeads.unshift({
-        ...formData,
-        id: 'L-' + Math.floor(Math.random() * 10000),
-        date: new Date().toLocaleDateString(),
-        status: 'Blueprint Generated'
-      });
-      localStorage.setItem('pixelgrowm_leads', JSON.stringify(existingLeads));
-      
+      window.location.href = mailtoLink;
       setIsSubmitting(false);
       setIsCompleted(true);
-    }, 1200);
+    }, 800);
   };
 
   // Generate dynamic growth insights based on selections

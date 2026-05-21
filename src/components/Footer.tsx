@@ -132,9 +132,13 @@ export default function Footer({ onNavigateTab, onOpenConsultation }: FooterProp
             <ul className="space-y-3.5 text-xs text-slate-500">
               <li className="flex items-start gap-2.5">
                 <Mail className="w-4 h-4 text-cyber-cyan flex-shrink-0 mt-0.5" />
-                <div className="break-all">
+                <div className="min-w-0">
                   <span className="text-[10px] uppercase font-mono text-slate-400 font-bold block">General Mail</span>
-                  <a href={`mailto:${AGENCY_CONTACT.email}`} className="text-slate-700 font-semibold hover:text-cyber-cyan hover:underline">
+                  <a
+                    href={`mailto:${AGENCY_CONTACT.email}`}
+                    className="text-slate-700 font-semibold hover:text-cyber-cyan hover:underline break-words"
+                    style={{ wordBreak: 'break-all' }}
+                  >
                     {AGENCY_CONTACT.email}
                   </a>
                 </div>
@@ -143,7 +147,12 @@ export default function Footer({ onNavigateTab, onOpenConsultation }: FooterProp
                 <Phone className="w-4 h-4 text-cyber-cyan flex-shrink-0 mt-0.5" />
                 <div>
                   <span className="text-[10px] uppercase font-mono text-slate-400 font-bold block">WhatsApp Line</span>
-                  <a href="tel:+919876543210" className="text-slate-700 font-semibold hover:text-cyber-cyan hover:underline">
+                  <a
+                    href={`https://wa.me/${AGENCY_CONTACT.phone.replace(/\s+/g, '').replace('+', '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-slate-700 font-semibold hover:text-cyber-cyan hover:underline"
+                  >
                     {AGENCY_CONTACT.phone}
                   </a>
                 </div>
