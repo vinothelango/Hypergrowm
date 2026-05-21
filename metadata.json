@@ -1,0 +1,6 @@
+{
+  "name": "Pixelgrowm",
+  "description": "Startup-focused digital growth agency delivering high-converting websites, targeted Meta & Google Ads, and premium video editing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
